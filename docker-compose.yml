@@ -4,6 +4,7 @@ services:
   elasticsearch:
     container_name: elasticsearch
     hostname: elasticsearch
+    user:"1001:1001"
     cpus: "2"
     mem_limit: "2G"
     build:
@@ -21,8 +22,6 @@ services:
         soft: -1
         hard: -1
     environment:
-      - PUID: "1001"
-      - PGID: "1001"
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
       - http.cors.enabled=true
@@ -39,6 +38,7 @@ services:
   elasticsearch2:
     container_name: elasticsearch2
     hostname: elasticsearch2
+    user:"1001:1001"
     cpus: "2"
     mem_limit: "2G"
     build:
@@ -56,8 +56,6 @@ services:
         soft: -1
         hard: -1
     environment:
-      - PUID: "1001"
-      - PGID: "1001"
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
       - http.cors.enabled=true
