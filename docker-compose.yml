@@ -157,8 +157,3 @@ services:
 networks:
   elk:
     driver: bridge
-volumes:
-  elasticsearch_data:
-    driver: local
-  elasticsearch2_data:
-    driver: local
