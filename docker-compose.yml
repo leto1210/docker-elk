@@ -4,7 +4,7 @@ services:
   elasticsearch:
     container_name: elasticsearch
     hostname: elasticsearch
-    user: "1001:1001"
+    user: "1000:1000"
     cpus: "2"
     mem_limit: "2G"
     build:
@@ -38,7 +38,7 @@ services:
   elasticsearch2:
     container_name: elasticsearch2
     hostname: elasticsearch2
-    user: "1001:1001"
+    user: "1000:1000"
     cpus: "2"
     mem_limit: "2G"
     build:
