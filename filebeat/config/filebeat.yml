@@ -69,8 +69,6 @@ setup.template.overwrite: true
 #============================== Kibana =========================================
 setup.kibana:
   host: "kibana:5601"
-  username: "elastic"
-  password: "changeme"
 
 #============================== Xpack Monitoring ===============================
 xpack.monitoring:
