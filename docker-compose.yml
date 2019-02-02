@@ -91,7 +91,7 @@ services:
       context: curator/
     environment:
       - ES_HOST=elasticsearch
-      - DRYRUN=False
+      - DRYRUN=FALSE
       - INTERVAL_IN_HOURS=24
     volumes:
       - ./curator/config:/app/conf/:ro
