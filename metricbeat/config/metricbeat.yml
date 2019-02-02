@@ -1,3 +1,7 @@
+# Maximum amount of time to randomly delay the start of a metricset. Use 0 to
+# disable startup delay.
+metricbeat.max_start_delay: 10s
+
 metricbeat.config:
   modules:
     path: ${path.config}/modules.d/*.yml
