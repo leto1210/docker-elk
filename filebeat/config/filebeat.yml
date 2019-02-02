@@ -65,8 +65,8 @@ setup.dashboards:
 setup.template.overwrite: true
 
 #============================== Logstach =========================================
-output.logstash:
-  hosts: ["logstash:5044"]
+#output.logstash:
+#  hosts: ["logstash:5044"]
 
 #============================== Kibana =========================================
 setup.kibana:
