@@ -26,6 +26,7 @@ services:
         hard: -1
     environment:
       - cluster.name=docker-cluster
+      - node.name=elasticsearch
       - bootstrap.memory_lock=true
       - http.cors.enabled=true
       - http.cors.allow-origin=*
@@ -63,6 +64,7 @@ services:
         hard: -1
     environment:
       - cluster.name=docker-cluster
+      - node.name=elasticsearch2
       - bootstrap.memory_lock=true
       - http.cors.enabled=true
       - http.cors.allow-origin=*
