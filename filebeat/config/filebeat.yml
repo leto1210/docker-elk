@@ -1,3 +1,7 @@
+#========================== Filebeat configuration ==============================
+filebeat.spool_size: 2048
+filebeat.idle_timeout: 30s
+
 # https://github.com/elastic/beats/blob/master/filebeat/filebeat.reference.yml
 
 filebeat.modules:
@@ -21,6 +25,14 @@ filebeat.inputs:
   # exclude_lines: ["^\\s+[\\-`('.|_]"]  # drop asciiart lines
   # multiline.pattern: "^\t|^[[:space:]]+(at|...)|^Caused by:"
   # multiline.match: after
+
+filebeat.prospectors:
+- input_type: log
+  paths:
+    - /var/log/*.log
+  tags: ["winston"]  ## tags for the records
+  fields:
+    instance_id: "filebeat" ## add extra metadata
 
 #========================== Filebeat autodiscover ==============================
 # See this URL on how to run Apache2 Filebeat module: # https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html
@@ -49,8 +61,12 @@ output.elasticsearch:
 #============================== Dashboards =====================================
 setup.dashboards:
   enabled: true
- 
+
 setup.template.overwrite: true
+
+#============================== Logstach =========================================
+output.logstash:
+  hosts: ["logstash:5044"]
 
 #============================== Kibana =========================================
 setup.kibana:
