@@ -29,7 +29,7 @@ filebeat.inputs:
 filebeat.prospectors:
 - input_type: log
   paths:
-    - /var/log/*.log
+    - /tmp/log/*.log
   tags: ["winston"]  ## tags for the records
   fields:
     instance_id: "filebeat" ## add extra metadata
