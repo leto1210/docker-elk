@@ -5,10 +5,11 @@ services:
     container_name: elasticsearch
     hostname: elasticsearch
     user: "1000:1000"
-    resources:
-        limits:
-          cpus: "2"
-          memory: "2G"
+    deploy:
+      resources:
+          limits:
+            cpus: "2"
+            memory: "2G"
     build:
       context: elasticsearch/
       args:
@@ -41,10 +42,11 @@ services:
     container_name: elasticsearch2
     hostname: elasticsearch2
     user: "1000:1000"
-    resources:
-        limits:
-          cpus: "2"
-          memory: "2G"
+    deploy:
+      resources:
+          limits:
+            cpus: "2"
+            memory: "2G"
     build:
       context: elasticsearch/
       args:
@@ -76,10 +78,11 @@ services:
   logstash:
     container_name: logstash
     hostname: logstash
-    resources:
-        limits:
-          cpus: "2"
-          memory: "1G"
+    deploy:
+      resources:
+          limits:
+            cpus: "2"
+            memory: "1G"
     build:
       context: logstash/
       args:
@@ -119,10 +122,11 @@ services:
     container_name: metricbeat
     hostname: metricbeat
     user: root
-    resources:
-        limits:
-          cpus: "2"
-          memory: "1G"
+    deploy:
+      resources:
+          limits:
+            cpus: "2"
+            memory: "1G"
     build:
       cap_add:
         - SYS_PTRACE
