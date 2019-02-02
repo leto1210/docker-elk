@@ -1,6 +1,4 @@
 #========================== Filebeat configuration ==============================
-filebeat.spool_size: 2048
-filebeat.idle_timeout: 30s
 
 # https://github.com/elastic/beats/blob/master/filebeat/filebeat.reference.yml
 
