@@ -129,6 +129,7 @@ services:
             memory: "1G"
       restart_policy:
         condition: on-failure
+    security_opt:  ['apparmor:unconfined', 'seccomp:unconfined']
     build:
       context: metricbeat/
       args:
