@@ -24,13 +24,13 @@ filebeat.inputs:
   # multiline.pattern: "^\t|^[[:space:]]+(at|...)|^Caused by:"
   # multiline.match: after
 
-filebeat.prospectors:
-- input_type: log
-  paths:
-    - /tmp/log/*.log
-  tags: ["winston"]  ## tags for the records
-  fields:
-    instance_id: "filebeat" ## add extra metadata
+#filebeat.prospectors:
+#- input_type: log
+#  paths:
+#    - /tmp/log/*.log
+#  tags: ["winston"]  ## tags for the records
+#  fields:
+#    instance_id: "filebeat" ## add extra metadata
 
 #========================== Filebeat autodiscover ==============================
 # See this URL on how to run Apache2 Filebeat module: # https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html
