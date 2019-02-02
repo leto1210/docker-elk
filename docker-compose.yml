@@ -2,7 +2,7 @@ version: '3.2'
 
 services:
   elasticsearch:
-    restart: on-failure:5
+    restart: always
     container_name: elasticsearch
     hostname: elasticsearch
     user: "1000:1000"
@@ -41,6 +41,7 @@ services:
       retries: 6
 
   elasticsearch2:
+    restart: always
     container_name: elasticsearch2
     hostname: elasticsearch2
     user: "1000:1000"
@@ -79,7 +80,7 @@ services:
       retries: 6
 
   curator:
-    restart: on-failure:5
+    restart: always
     container_name: curator
     hostname: curator
     deploy:
@@ -103,7 +104,7 @@ services:
 
 
   logstash:
-    restart: on-failure:5
+    restart: always
     container_name: logstash
     hostname: logstash
     deploy:
@@ -131,7 +132,7 @@ services:
 
 
   kibana:
-    restart: on-failure:5
+    restart: always
     container_name: kibana
     hostname: kibana
     build:
@@ -148,7 +149,7 @@ services:
       - elasticsearch2
 
   metricbeat:
-    restart: on-failure:5
+    restart: always
     container_name: metricbeat
     hostname: metricbeat
     user: root
@@ -178,7 +179,7 @@ services:
       - kibana
 
   filebeat:
-    restart: on-failure:5
+    restart: always
     container_name: filebeat
     hostname: filebeat
     user: root
@@ -207,7 +208,7 @@ services:
       - kibana
 
   elasticsearch-head:
-    restart: on-failure:5
+    restart: always
     container_name: head
     hostname: head
     build:
