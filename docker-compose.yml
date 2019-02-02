@@ -40,44 +40,44 @@ services:
       timeout: 5s
       retries: 6
 
-  elasticsearch2:
-    restart: always
-    container_name: elasticsearch2
-    hostname: elasticsearch2
-    user: "1000:1000"
-    deploy:
-      resources:
-          limits:
-            cpus: "4"
-            memory: "4G"
-    build:
-      context: elasticsearch/
-      args:
-        ELK_VERSION: $ELK_VERSION
-    volumes:
-      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-      - /opt/temp01/elasticsearch/data2:/usr/share/elasticsearch/data
-    ports:
-      - "9200"
-      - "9300"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    environment:
-      - cluster.name=docker-cluster
-      - node.name=elasticsearch2
-      - bootstrap.memory_lock=true
-      - http.cors.enabled=true
-      - http.cors.allow-origin=*
-      - "ES_JAVA_OPTS: -Xmx256m -Xms256m"
-    networks:
-      - elk
-    healthcheck:
-      test: ["CMD-SHELL", "docker-healthcheck"]
-      interval: 10s
-      timeout: 5s
-      retries: 6
+  #elasticsearch2:
+    #restart: always
+    #container_name: elasticsearch2
+    #hostname: elasticsearch2
+    #user: "1000:1000"
+    #deploy:
+    #  resources:
+    #      limits:
+    #        cpus: "4"
+    #        memory: "4G"
+    #build:
+    #  context: elasticsearch/
+    #  args:
+    #    ELK_VERSION: $ELK_VERSION
+    #volumes:
+    #  - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    #  - /opt/temp01/elasticsearch/data2:/usr/share/elasticsearch/data
+    #ports:
+    #  - "9200"
+    #  - "9300"
+    #ulimits:
+    #  memlock:
+    #    soft: -1
+    #    hard: -1
+    #environment:
+    #  - cluster.name=docker-cluster
+    #  - node.name=elasticsearch2
+    #  - bootstrap.memory_lock=true
+    #  - http.cors.enabled=true
+    #  - http.cors.allow-origin=*
+    #  - "ES_JAVA_OPTS: -Xmx256m -Xms256m"
+    #networks:
+    #  - elk
+    #healthcheck:
+    #  test: ["CMD-SHELL", "docker-healthcheck"]
+    #  interval: 10s
+    #  timeout: 5s
+    #  retries: 6
 
   curator:
     restart: always
