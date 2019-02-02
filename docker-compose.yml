@@ -120,6 +120,7 @@ services:
       - elasticsearch2
 
   metricbeat:
+    restart: on-failure:5
     container_name: metricbeat
     hostname: metricbeat
     user: root
