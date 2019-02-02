@@ -2,14 +2,15 @@ version: '3.2'
 
 services:
   elasticsearch:
+    restart: on-failure:5
     container_name: elasticsearch
     hostname: elasticsearch
     user: "1000:1000"
     deploy:
       resources:
           limits:
-            cpus: "2"
-            memory: "2G"
+            cpus: "4"
+            memory: "4G"
     build:
       context: elasticsearch/
       args:
@@ -46,8 +47,8 @@ services:
     deploy:
       resources:
           limits:
-            cpus: "2"
-            memory: "2G"
+            cpus: "4"
+            memory: "4G"
     build:
       context: elasticsearch/
       args:
@@ -76,6 +77,30 @@ services:
       interval: 10s
       timeout: 5s
       retries: 6
+
+  curator:
+    restart: on-failure:5
+    container_name: curator
+    hostname: curator
+    deploy:
+      resources:
+          limits:
+            cpus: "0.5"
+            memory: "1G"
+    build:
+      context: curator/
+    environment:
+      - ES_HOST=elasticsearch
+      - DRYRUN=True
+      - INTERVAL_IN_HOURS=24
+    volumes:
+      - ./curator/config:/app/conf/:ro
+      - ./curator/actions:/app/actions/:ro
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch2
+
 
   logstash:
     restart: on-failure:5
