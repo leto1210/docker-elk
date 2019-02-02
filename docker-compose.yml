@@ -113,6 +113,8 @@ services:
     user: root
     cpus: "2"
     mem_limit: "1G"
+    cap_add:
+      - SYS_PTRACE
     security_opt:
       - seccomp:unconfined
     build:
