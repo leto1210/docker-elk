@@ -34,7 +34,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 6
-      
+
   elasticsearch2:
     container_name: elasticsearch2
     hostname: elasticsearch2
@@ -113,6 +113,8 @@ services:
     user: root
     cpus: "2"
     mem_limit: "1G"
+    security_opt:
+      - seccomp:unconfined
     build:
       context: metricbeat/
       args:
@@ -130,7 +132,7 @@ services:
     depends_on:
       kibana:
         condition: service_started
-  
+
   filebeat:
     container_name: filebeat
     hostname: filebeat
@@ -159,7 +161,7 @@ services:
     depends_on:
       kibana:
         condition: service_started
-      
+
   elasticsearch-head:
     container_name: head
     hostname: head
@@ -172,7 +174,7 @@ services:
     depends_on:
       kibana:
         condition: service_started
-      
+
 networks:
   elk:
     driver: bridge
