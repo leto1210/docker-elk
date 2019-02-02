@@ -220,6 +220,23 @@ services:
     depends_on:
       - kibana
 
+  elastalert:
+    restart: always
+    container_name: elastalert
+    hostname: elastalert
+    build:
+      context: elastalert/
+    ports:
+    - '3030:3030'
+    environment:
+    - ELASTICSEARCH_PORT="9200"
+    - ELASTICSEARCH_HOST="elasticsearch"
+    - ELASTALERT_SUPERVISOR_CONF="/opt/config/elastalert_supervisord.conf"
+    networks:
+      - elk
+    depends_on:
+      - kibana
+
 networks:
   elk:
     driver: bridge
