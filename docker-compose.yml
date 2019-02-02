@@ -5,8 +5,10 @@ services:
     container_name: elasticsearch
     hostname: elasticsearch
     user: "1000:1000"
-    cpus: "2"
-    mem_limit: "2G"
+    resources:
+        limits:
+          cpus: "2"
+          memory: "2G"
     build:
       context: elasticsearch/
       args:
@@ -39,8 +41,10 @@ services:
     container_name: elasticsearch2
     hostname: elasticsearch2
     user: "1000:1000"
-    cpus: "2"
-    mem_limit: "2G"
+    resources:
+        limits:
+          cpus: "2"
+          memory: "2G"
     build:
       context: elasticsearch/
       args:
@@ -72,6 +76,10 @@ services:
   logstash:
     container_name: logstash
     hostname: logstash
+    resources:
+        limits:
+          cpus: "2"
+          memory: "1G"
     build:
       context: logstash/
       args:
@@ -79,16 +87,17 @@ services:
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - logstashdata:/usr/share/logstash/data
     ports:
-      - "5000:5000"
+      - "5044:5044"
       - "9600:9600"
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
       - elk
     depends_on:
-      elasticsearch2 :
-        condition: service_healthy
+      - elasticsearch2
+
 
   kibana:
     container_name: kibana
@@ -104,8 +113,7 @@ services:
     networks:
       - elk
     depends_on:
-      elasticsearch2 :
-        condition: service_healthy
+      - elasticsearch2
 
   metricbeat:
     container_name: metricbeat
@@ -130,8 +138,7 @@ services:
       - ./metricbeat/config/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
     command: ["--strict.perms=false", "-system.hostfs=/hostfs"]
     depends_on:
-      kibana:
-        condition: service_started
+      - kibana
 
   filebeat:
     container_name: filebeat
@@ -159,8 +166,7 @@ services:
       - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD:-changeme}
     command: ["--strict.perms=false"]
     depends_on:
-      kibana:
-        condition: service_started
+      - kibana
 
   elasticsearch-head:
     container_name: head
@@ -172,9 +178,11 @@ services:
     networks:
       - elk
     depends_on:
-      kibana:
-        condition: service_started
+      - kibana
 
 networks:
   elk:
     driver: bridge
+volumes:
+  logstashdata:
+    driver: local
