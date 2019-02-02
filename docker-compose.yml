@@ -127,6 +127,8 @@ services:
           limits:
             cpus: "2"
             memory: "1G"
+      restart_policy:
+        condition: on-failure
     build:
       context: metricbeat/
       args:
