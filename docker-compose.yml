@@ -128,8 +128,6 @@ services:
             cpus: "2"
             memory: "1G"
     build:
-      cap_add:
-        - ALL
       context: metricbeat/
       args:
         ELK_VERSION: $ELK_VERSION
