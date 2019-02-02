@@ -129,7 +129,7 @@ services:
             memory: "1G"
     build:
       cap_add:
-        - SYS_PTRACE
+        - ALL
       context: metricbeat/
       args:
         ELK_VERSION: $ELK_VERSION
