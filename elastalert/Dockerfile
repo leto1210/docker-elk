@@ -1,7 +1,7 @@
 FROM registry.hub.docker.com/library/alpine:3.7
 
-ENV ELK_ALERT=V0.1.38
-ENV ELASTALERT_URL https://github.com/Yelp/elastalert/archive/${ELK_ALERT}.zip
+ENV ELK_ALERT=V0.1.38.zip
+ENV ELASTALERT_URL https://github.com/Yelp/elastalert/archive/${ELK_ALERT}
 
 WORKDIR /opt
 
