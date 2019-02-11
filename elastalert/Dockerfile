@@ -1,6 +1,6 @@
 FROM registry.hub.docker.com/library/alpine:3.7
 
-ENV ELASTALERT_URL https://github.com/Yelp/elastalert/archive/v${ELK_ALERT}.zip
+ENV ELASTALERT_URL https://github.com/Yelp/elastalert/archive/${ELK_ALERT}.zip
 
 WORKDIR /opt
 
