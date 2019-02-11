@@ -7,8 +7,9 @@ WORKDIR /opt
 # Install software required for Elastalert and NTP for time synchronization.
 RUN apk update && \
     apk upgrade && \
-    apk add ca-certificates openssl-dev openssl libffi-dev python2 python2-dev py2-pip py2-yaml gcc musl-dev tzdata openntpd wget && \
-    wget -O elastalert.zip "${ELASTALERT_URL}" && \
+    apk add ca-certificates openssl-dev openssl libffi-dev python2 python2-dev py2-pip py2-yaml gcc musl-dev tzdata openntpd wget
+
+RUN wget -O elastalert.zip "${ELASTALERT_URL}" && \
     unzip elastalert.zip && \
     rm elastalert.zip && \
     mv e* /opt/elastalert && \
@@ -17,12 +18,14 @@ RUN apk update && \
     pip install -e . && \
     pip uninstall twilio --yes && \
     pip install twilio==6.0.0 && \
-    easy_install supervisor && \
-    mkdir -p /opt/config && \
+    easy_install supervisor
+
+RUN mkdir -p /opt/config && \
     mkdir -p /opt/rules && \
     mkdir -p /opt/logs && \
-    mkdir -p /var/empty && \
-    apk del python2-dev && \
+    mkdir -p /var/empty
+
+RUN apk del python2-dev && \
     apk del musl-dev && \
     apk del gcc && \
     apk del openssl-dev && \
