@@ -9,7 +9,8 @@ RUN apk update && \
     apk upgrade && \
     apk add ca-certificates openssl-dev openssl libffi-dev python2 python2-dev py2-pip py2-yaml gcc musl-dev tzdata openntpd wget
 
-RUN wget -O elastalert.zip "${ELASTALERT_URL}" && \
+#RUN wget -O elastalert.zip "${ELASTALERT_URL}" && \
+RUN wget -O elastalert.zip "https://github.com/Yelp/elastalert/archive/${ELK_ALERT}.zip" && \
     unzip elastalert.zip && \
     rm elastalert.zip && \
     mv e* /opt/elastalert && \
