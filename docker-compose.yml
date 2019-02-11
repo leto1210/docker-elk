@@ -40,7 +40,7 @@ services:
       timeout: 5s
       retries: 6
 
-  #elasticsearch2:
+  elasticsearch2:
     restart: always
     container_name: elasticsearch2
     hostname: elasticsearch2
