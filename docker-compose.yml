@@ -123,6 +123,7 @@ services:
     ports:
       - "5044:5044"
       - "9600:9600"
+      - "2514:2514"
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
