@@ -32,6 +32,7 @@ Based on the official Docker images from Elastic:
    * [How can I scale out the Elasticsearch cluster?](#how-can-i-scale-out-the-elasticsearch-cluster)
 4. [Storage](#storage)
    * [How can I persist Elasticsearch data?](#how-can-i-persist-elasticsearch-data)
+   * [How can I reduce number of shard?](#How-can-I-reduce-number-of-shard)
 5. [Extensibility](#extensibility)
    * [How can I add plugins?](#how-can-i-add-plugins)
    * [How can I enable the provided extensions?](#how-can-i-enable-the-provided-extensions)
@@ -189,6 +190,21 @@ This will store Elasticsearch data inside `/path/to/storage`.
 [esuser]: https://github.com/elastic/elasticsearch-docker/blob/016bcc9db1dd97ecd0ff60c1290e7fa9142f8ddd/templates/Dockerfile.j2#L22
 [macmounts]: https://docs.docker.com/docker-for-mac/osxfs/
 
+### How can I reduce number of shard?
+
+The default installation of Elastic Stack with RPM or Debian packages will configure each index with five primary shards and one replica.
+
+If you want to change these settings, you will need to edit the Elasticsearch template.
+
+The template is stored in :
+```yml
+elasticsearch/template.json
+```
+Load the template via api
+```console
+curl -X PUT "http://localhost:9200/_template/defaults" -H 'Content-Type: application/json' -d @template.json
+```
+
 ## Extensibility
 
 ### How can I add plugins?
@@ -273,4 +289,3 @@ See the following Wiki pages:
 
 * [External applications](https://github.com/deviantony/docker-elk/wiki/External-applications)
 * [Popular integrations](https://github.com/deviantony/docker-elk/wiki/Popular-integrations)
-
