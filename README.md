@@ -197,9 +197,9 @@ The default installation of Elastic Stack with RPM or Debian packages will confi
 If you want to change these settings, you will need to edit the Elasticsearch template.
 
 The template is stored in :
-```yml
+`
 elasticsearch/template.json
-```
+`
 Load the template via api
 ```console
 curl -X PUT "http://localhost:9200/_template/defaults" -H 'Content-Type: application/json' -d @template.json
