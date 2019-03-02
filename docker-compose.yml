@@ -100,7 +100,7 @@ services:
     networks:
       - elk
     depends_on:
-      - elasticsearch2
+      - elasticsearch
 
 
   logstash:
@@ -216,6 +216,28 @@ services:
       context: elasticsearch-head/
     ports:
       - "9100:9100"
+    networks:
+      - elk
+    depends_on:
+      - kibana
+
+  elastalert:
+    restart: always
+    container_name: elastalert
+    hostname: elastalert
+    deploy:
+      resources:
+          limits:
+            cpus: "2"
+            memory: "1G"
+    build:
+      context: elastalert/
+    ports:
+    - '3030:3030'
+    environment:
+    - ELASTICSEARCH_PORT="9200"
+    - ELASTICSEARCH_HOST="elasticsearch"
+    - ELASTALERT_SUPERVISOR_CONF="/opt/config/elastalert_supervisord.conf"
     networks:
       - elk
     depends_on:
