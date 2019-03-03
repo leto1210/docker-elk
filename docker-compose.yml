@@ -81,30 +81,6 @@ services:
       timeout: 5s
       retries: 6
 
-  curator:
-    restart: always
-    container_name: curator
-    hostname: curator
-    deploy:
-      resources:
-          limits:
-            cpus: "0.5"
-            memory: "1G"
-    build:
-      context: curator/
-    environment:
-      - ES_HOST=elasticsearch
-      - DRYRUN=FALSE
-      - INTERVAL_IN_HOURS=24
-    volumes:
-      - ./curator/config:/app/conf/:ro
-      - ./curator/actions:/app/actions/:ro
-    networks:
-      - elk
-    depends_on:
-      - elasticsearch
-
-
   logstash:
     restart: always
     container_name: logstash
@@ -122,6 +98,9 @@ services:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./logstash/pipeline:/usr/share/logstash/pipeline
       - logstashdata:/usr/share/logstash/data
+    networks:
+      macvlan-network:
+        ipv4_address: 192.168.2.92
     ports:
       - "5044:5044"
       - "9600:9600"
@@ -132,7 +111,6 @@ services:
       - elk
     depends_on:
       - elasticsearch
-
 
   kibana:
     restart: always
@@ -147,7 +125,8 @@ services:
     ports:
       - "5601:5601"
     networks:
-      - elk
+      macvlan-network:
+        ipv4_address: 192.168.2.93
     depends_on:
       - elasticsearch
 
@@ -169,7 +148,8 @@ services:
       args:
         ELK_VERSION: $ELK_VERSION
     networks:
-      - elk
+      macvlan-network:
+        ipv4_address: 192.168.2.94
     volumes:
       - /proc:/hostfs/proc:ro
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
@@ -200,7 +180,8 @@ services:
       # This is needed for filebeat to load logs for auditd module
       # - /var/log/audit/:/var/log/audit/:ro
     networks:
-      - elk
+      macvlan-network:
+        ipv4_address: 192.168.2.95
     environment:
       - ELASTICSEARCH_HOST="elasticsearch"
       - KIBANA_HOST="kibana"
@@ -219,9 +200,34 @@ services:
     ports:
       - "9100:9100"
     networks:
-      - elk
+      macvlan-network:
+        ipv4_address: 192.168.2.96
     depends_on:
       - kibana
+
+  curator:
+    restart: always
+    container_name: curator
+    hostname: curator
+    deploy:
+      resources:
+          limits:
+            cpus: "0.5"
+            memory: "1G"
+    build:
+      context: curator/
+    environment:
+      - ES_HOST=elasticsearch
+      - DRYRUN=FALSE
+      - INTERVAL_IN_HOURS=24
+    volumes:
+      - ./curator/config:/app/conf/:ro
+      - ./curator/actions:/app/actions/:ro
+    networks:
+      macvlan-network:
+        ipv4_address: 192.168.2.97
+    depends_on:
+      - elasticsearch
 
   # elastalert:
   #   restart: always
