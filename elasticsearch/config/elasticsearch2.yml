@@ -1,17 +1,19 @@
 ---
 ## Default Elasticsearch configuration from elasticsearch-docker.
 ## from https://github.com/elastic/elasticsearch-docker/blob/master/build/elasticsearch/elasticsearch.yml
-#
+#give your cluster a name.
 cluster.name: "docker-cluster"
-#network.host: elasticsearch
+
+#give your nodes a name (change node number from node to node).
+node.name: "elasticsearch2"
 
 # minimum_master_nodes need to be explicitly set when bound on a public IP
 # set to 1 to allow single node clusters
 # Details: https://github.com/elastic/elasticsearch/pull/17288
-#discovery.zen.minimum_master_nodes: 1
+discovery.zen.minimum_master_nodes: 1
 
 ## Use single node discovery in order to disable production mode and avoid bootstrap checks
 ## see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
 #
 discovery.type: zen
-discovery.zen.ping.unicast.hosts: elasticsearch
+discovery.zen.ping.unicast.hosts: ["elasticsearch", "elasticsearch2"]
