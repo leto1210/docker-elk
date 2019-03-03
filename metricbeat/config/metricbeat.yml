@@ -54,7 +54,7 @@ metricbeat.modules:
   period: 10s
   enabled: true
 
- #================================ Processors ===================================
+#================================ Processors ===================================
 processors:
 - add_cloud_metadata: ~
 - add_docker_metadata: ~
@@ -63,8 +63,10 @@ processors:
 - add_host_metadata:
     netinfo.enabled: true
 
+#================================ Elasticsearch ================================
+
 output.elasticsearch:
-  hosts: "elasticsearch:9200"
+  hosts: ["elasticsearch:9200", "elasticsearch2:9200"]
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'
 

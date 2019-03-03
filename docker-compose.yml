@@ -31,7 +31,7 @@ services:
       - bootstrap.memory_lock=true
       - http.cors.enabled=true
       - http.cors.allow-origin=*
-      - "ES_JAVA_OPTS: -Xmx1536m -Xms1536m"
+      - "ES_JAVA_OPTS: -Xmx2000m -Xms2000m"
     networks:
       macvlan-network:
         ipv4_address: 192.168.2.90
@@ -71,7 +71,7 @@ services:
       - bootstrap.memory_lock=true
       - http.cors.enabled=true
       - http.cors.allow-origin=*
-      - "ES_JAVA_OPTS: -Xmx1536m -Xms1536m"
+      - "ES_JAVA_OPTS: -Xmx2000m -Xms2000m"
     networks:
       macvlan-network:
         ipv4_address: 192.168.2.91
