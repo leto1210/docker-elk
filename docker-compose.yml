@@ -98,13 +98,13 @@ services:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./logstash/pipeline:/usr/share/logstash/pipeline
       - logstashdata:/usr/share/logstash/data
-    networks:
-      macvlan-network:
-        ipv4_address: 192.168.2.92
     ports:
       - "5044:5044"
       - "9600:9600"
       - "2514:2514"
+    networks:
+      macvlan-network:
+        ipv4_address: 192.168.2.92
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
