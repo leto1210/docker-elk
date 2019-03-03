@@ -9,9 +9,6 @@ xpack.monitoring.elasticsearch.url: "http://elasticsearch:9200"
 xpack.monitoring.elasticsearch.username: "elastic"
 xpack.monitoring.elasticsearch.password: "changeme"
 
-output.elasticsearch:
-  hosts: ["elasticsearch:9200", "elasticsearch2:9200"]
-
 pipeline:
   batch:
     size: 1000
