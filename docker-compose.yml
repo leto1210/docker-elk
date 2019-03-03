@@ -57,7 +57,7 @@ services:
         ELK_VERSION: $ELK_VERSION
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-      - /opt/temp01/elasticsearch/data2:/usr/share/elasticsearch/data
+      - /opt/temp02/elasticsearch/data2:/usr/share/elasticsearch/data
     ports:
       - "9200"
       - "9300"
