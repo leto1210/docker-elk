@@ -57,17 +57,13 @@ output.elasticsearch:
   password: "changeme"
 
 #============================== Dashboards =====================================
-setup.dashboards:
-  enabled: true
-
-setup.template.overwrite: true
+setup.dashboards.enabled: true
 setup.template.settings:
   index.number_of_shards: 1
+  index.number_of_replicas: 0
+  index.codec: best_compression
 
-setup.template.settings:
-  index:
-    number_of_shards: 1
-    number_of_replicas: 0
+setup.template.overwrite: true
 
 #============================== Logstach =========================================
 #output.logstash:

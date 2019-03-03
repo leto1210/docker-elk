@@ -129,7 +129,7 @@ services:
     networks:
       - elk
     depends_on:
-      - elasticsearch2
+      - elasticsearch
 
 
   kibana:
@@ -147,7 +147,7 @@ services:
     networks:
       - elk
     depends_on:
-      - elasticsearch2
+      - elasticsearch
 
   metricbeat:
     restart: always

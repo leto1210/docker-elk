@@ -63,10 +63,6 @@ processors:
 - add_host_metadata:
     netinfo.enabled: true
 
-setup.template.settings:
-  index.number_of_shards: 1
-  index.codec: best_compression
-
 output.elasticsearch:
   hosts: "elasticsearch:9200"
   username: '${ELASTICSEARCH_USERNAME:}'
@@ -78,6 +74,9 @@ setup.kibana.protocol: "http"
 
 #============================== Dashboards =====================================
 setup.dashboards.enabled: true
+setup.template.settings:
+  index.number_of_shards: 1
+  index.codec: best_compression
 
 #============================== Xpack Monitoring ===============================
 xpack.monitoring:
