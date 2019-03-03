@@ -107,8 +107,6 @@ services:
         ipv4_address: 192.168.2.92
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-    networks:
-      - elk
     depends_on:
       - elasticsearch
 
