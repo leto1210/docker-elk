@@ -33,7 +33,8 @@ services:
       - http.cors.allow-origin=*
       - "ES_JAVA_OPTS: -Xmx1536m -Xms1536m"
     networks:
-      - elk
+      macvlan-network:
+        ipv4_address: 192.168.2.90
     healthcheck:
       test: ["CMD-SHELL", "docker-healthcheck"]
       interval: 10s
@@ -72,7 +73,8 @@ services:
       - http.cors.allow-origin=*
       - "ES_JAVA_OPTS: -Xmx1536m -Xms1536m"
     networks:
-      - elk
+      macvlan-network:
+        ipv4_address: 192.168.2.91
     healthcheck:
       test: ["CMD-SHELL", "docker-healthcheck"]
       interval: 10s
@@ -246,6 +248,8 @@ services:
 networks:
   elk:
     driver: bridge
+  macvlan-network:
+    external: true
 volumes:
   logstashdata:
     driver: local
