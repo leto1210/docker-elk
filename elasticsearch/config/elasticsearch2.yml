@@ -6,6 +6,9 @@ cluster.name: "docker-cluster"
 
 #give your nodes a name (change node number from node to node).
 node.name: "elasticsearch2"
+node.master: true
+node.data: true
+network.host: 0.0.0.0
 
 # minimum_master_nodes need to be explicitly set when bound on a public IP
 # set to 1 to allow single node clusters
