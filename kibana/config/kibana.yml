@@ -5,5 +5,5 @@
 server.name: kibana
 server.host: "0"
 elasticsearch.url: http://elasticsearch.cparla.fr:9200
-setup.dashboards.enabled: true
+setup.dashboards.always_kibana: true
 xpack.monitoring.ui.container.elasticsearch.enabled: true
