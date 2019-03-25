@@ -8,6 +8,7 @@ path.config: /usr/share/logstash/pipeline
 xpack.monitoring.elasticsearch.url: "http://elasticsearch.cparla.fr:9200"
 xpack.monitoring.elasticsearch.username: "elastic"
 xpack.monitoring.elasticsearch.password: "changeme"
+xpack.monitoring.enabled: true
 
 pipeline:
   batch:
