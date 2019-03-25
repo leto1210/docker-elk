@@ -3,7 +3,6 @@
 ## from https://github.com/elastic/kibana-docker/blob/master/build/kibana/config/kibana.yml
 #
 server.name: kibana
-server.host: "0"
+#server.host: "0"
 elasticsearch.url: http://elasticsearch.cparla.fr:9200
-setup.dashboards.always_kibana: true
 xpack.monitoring.ui.container.elasticsearch.enabled: true
