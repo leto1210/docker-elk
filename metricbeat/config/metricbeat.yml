@@ -66,12 +66,12 @@ processors:
 #================================ Elasticsearch ================================
 
 output.elasticsearch:
-  hosts: ["elasticsearch:9200", "elasticsearch2:9200"]
+  hosts: ["elasticsearch.cparla.fr:9200", "elasticsearch2.cparla.fr:9200"]
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'
 
 #============================== Kibana =========================================
-setup.kibana.host: "kibana:5601"
+setup.kibana.host: "kibana.cparla.fr:5601"
 setup.kibana.protocol: "http"
 
 #============================== Dashboards =====================================

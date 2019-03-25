@@ -5,7 +5,7 @@
 cluster.name: "docker-cluster"
 
 #give your nodes a name (change node number from node to node).
-node.name: "elasticsearch2"
+node.name: "elasticsearch2.cparla.fr"
 node.master: true
 node.data: true
 network.host: 0.0.0.0
@@ -19,4 +19,4 @@ discovery.zen.minimum_master_nodes: 1
 ## see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
 #
 discovery.type: zen
-discovery.zen.ping.unicast.hosts: ["elasticsearch", "elasticsearch2"]
+discovery.zen.ping.unicast.hosts: ["elasticsearch.cparla.fr", "elasticsearch2.cparla.fr"]
