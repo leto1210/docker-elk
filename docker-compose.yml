@@ -53,8 +53,6 @@ services:
         DISTRO_VERSION: $DISTRO_VERSION
     volumes:
       - odfe-data2:/usr/share/elasticsearch/data
-    ports:
-      - "9200:9200"
     ulimits:
       memlock:
         soft: -1
