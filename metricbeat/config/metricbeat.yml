@@ -66,7 +66,7 @@ processors:
 #================================ Elasticsearch ================================
 
 output.elasticsearch:
-  hosts: ["odfe-node1:9200", "odfe-node2:9200"]
+  hosts: ["https://odfe-node1:9200", "https://odfe-node2:9200"]
   # username: '${ELASTICSEARCH_USERNAME:}'
   # password: '${ELASTICSEARCH_PASSWORD:}'
 
