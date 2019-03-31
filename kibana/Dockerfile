@@ -1,4 +1,4 @@
-ARG ELK_VERSION
+ARG DISTRO_VERSION
 
 # https://github.com/elastic/kibana-docker
 FROM amazon/opendistro-for-elasticsearch-kibana:${DISTRO_VERSION}

@@ -1,4 +1,4 @@
-ARG ELK_VERSION
+ARG DISTRO_VERSION
 
 # https://github.com/elastic/elasticsearch-docker
 FROM amazon/opendistro-for-elasticsearch:${DISTRO_VERSION}
