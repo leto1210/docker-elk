@@ -81,7 +81,7 @@ services:
       context: kibana/
       args:
         DISTRO_VERSION: $DISTRO_VERSION
-    volumes:
+    # volumes:
       #- ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
     environment:
       ELASTICSEARCH_URL: https://odfe-node1:9200
