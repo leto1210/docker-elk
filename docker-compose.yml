@@ -59,8 +59,8 @@ services:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - /opt/temp02/elasticsearch/data2:/usr/share/elasticsearch/data
     ports:
-      - "9200"
-      - "9300"
+      - "9200:9200"
+      - "9300:9300"
     ulimits:
       memlock:
         soft: -1
@@ -131,7 +131,7 @@ services:
   metricbeat:
     restart: always
     container_name: metricbeat
-    hostname: metricbeat
+    hostname: metricbeat-docker
     user: root
     deploy:
       resources:
@@ -162,7 +162,7 @@ services:
   filebeat:
     restart: always
     container_name: filebeat
-    hostname: filebeat
+    hostname: filebeat-docker
     user: root
     build:
       context: filebeat/
@@ -181,7 +181,6 @@ services:
       macvlan-network:
         ipv4_address: 192.168.2.95
     environment:
-      - ELASTICSEARCH_HOST="elasticsearch"
       - KIBANA_HOST="kibana"
       - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME:-elastic}
       - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD:-changeme}
