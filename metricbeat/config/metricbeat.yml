@@ -66,12 +66,12 @@ processors:
 #================================ Elasticsearch ================================
 
 output.elasticsearch:
-  hosts: ["elasticsearch:9200", "elasticsearch2:9200"]
-  username: '${ELASTICSEARCH_USERNAME:}'
-  password: '${ELASTICSEARCH_PASSWORD:}'
+  hosts: ["odfe-node1:9200", "odfe-node2:9200"]
+  # username: '${ELASTICSEARCH_USERNAME:}'
+  # password: '${ELASTICSEARCH_PASSWORD:}'
 
 #============================== Kibana =========================================
-setup.kibana.host: "kibana:5601"
+setup.kibana.host: "odfe-kibana:5601"
 setup.kibana.protocol: "http"
 
 #============================== Dashboards =====================================

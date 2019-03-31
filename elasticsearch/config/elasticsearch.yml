@@ -2,10 +2,10 @@
 ## Default Elasticsearch configuration from elasticsearch-docker.
 ## from https://github.com/elastic/elasticsearch-docker/blob/master/build/elasticsearch/elasticsearch.yml
 #give your cluster a name.
-cluster.name: "docker-cluster"
+cluster.name: "odfe-cluster"
 
 #give your nodes a name (change node number from node to node).
-node.name: "elasticsearch"
+node.name: "odfe-node1"
 node.master: true
 node.data: true
 network.host: 0.0.0.0
@@ -19,4 +19,4 @@ discovery.zen.minimum_master_nodes: 1
 ## see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
 #
 discovery.type: zen
-discovery.zen.ping.unicast.hosts: ["elasticsearch", "elasticsearch2"]
+discovery.zen.ping.unicast.hosts: ["odfe-node1", "odfe-node2"]

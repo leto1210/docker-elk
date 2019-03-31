@@ -52,9 +52,9 @@ processors:
 
 #========================== Elasticsearch output ===============================
 output.elasticsearch:
-  hosts: ["elasticsearch:9200", "elasticsearch2:9200"]
-  username: "elastic"
-  password: "changeme"
+  hosts: ["odfe-node1:9200", "odfe-node2:9200"]
+  # username: "elastic"
+  # password: "changeme"
 
 #============================== Dashboards =====================================
 setup.dashboards.enabled: true
@@ -71,7 +71,7 @@ setup.template.overwrite: true
 
 #============================== Kibana =========================================
 setup.kibana:
-  host: "kibana:5601"
+  host: "odfe-kibana:5601"
 
 #============================== Xpack Monitoring ===============================
 xpack.monitoring:

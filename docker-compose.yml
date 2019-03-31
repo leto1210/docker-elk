@@ -1,10 +1,10 @@
-version: '3.2'
+version: '3'
 
 services:
-  elasticsearch:
+  odfe-node1:
     restart: always
-    container_name: elasticsearch
-    hostname: elasticsearch
+    container_name: odfe-node1
+    hostname: odfe-node1
     user: "1000:1000"
     deploy:
       resources:
@@ -14,37 +14,33 @@ services:
     build:
       context: elasticsearch/
       args:
-        ELK_VERSION: $ELK_VERSION
+        DISTRO_VERSION: $DISTRO_VERSION
     volumes:
-      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-      - /opt/temp01/elasticsearch/data1:/usr/share/elasticsearch/data
+      - odfe-data1:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
-      - "9300:9300"
+      - "9600:9600" # required for Performance Analyzer
     ulimits:
       memlock:
         soft: -1
         hard: -1
     environment:
-      - cluster.name=docker-cluster
-      - node.name=elasticsearch
+      - cluster.name=odfe-cluster
+      - node.name=odfe-node1
       - bootstrap.memory_lock=true
-      - http.cors.enabled=true
-      - http.cors.allow-origin=*
       - "ES_JAVA_OPTS: -Xmx2000m -Xms2000m"
     networks:
-      macvlan-network:
-        ipv4_address: 192.168.2.90
+      - odfe-net
     healthcheck:
       test: ["CMD-SHELL", "docker-healthcheck"]
       interval: 10s
       timeout: 5s
       retries: 6
 
-  elasticsearch2:
+  odfe-node2:
     restart: always
-    container_name: elasticsearch2
-    hostname: elasticsearch2
+    container_name: odfe-node2
+    hostname: odfe-node2
     user: "1000:1000"
     deploy:
       resources:
@@ -54,84 +50,54 @@ services:
     build:
       context: elasticsearch/
       args:
-        ELK_VERSION: $ELK_VERSION
+        DISTRO_VERSION: $DISTRO_VERSION
     volumes:
-      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-      - /opt/temp02/elasticsearch/data2:/usr/share/elasticsearch/data
+      - odfe-data2:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
-      - "9300:9300"
     ulimits:
       memlock:
         soft: -1
         hard: -1
     environment:
-      - cluster.name=docker-cluster
-      - node.name=elasticsearch2
+      - cluster.name=odfe-cluster
+      - node.name=odfe-node2
       - bootstrap.memory_lock=true
-      - http.cors.enabled=true
-      - http.cors.allow-origin=*
       - "ES_JAVA_OPTS: -Xmx2000m -Xms2000m"
+      - discovery.zen.ping.unicast.hosts=odfe-node1
     networks:
-      macvlan-network:
-        ipv4_address: 192.168.2.91
+      - odfe-net
     healthcheck:
       test: ["CMD-SHELL", "docker-healthcheck"]
       interval: 10s
       timeout: 5s
       retries: 6
 
-  logstash:
+  odfe-kibana:
     restart: always
-    container_name: logstash
-    hostname: logstash
-    deploy:
-      resources:
-          limits:
-            cpus: "2"
-            memory: "1G"
-    build:
-      context: logstash/
-      args:
-        ELK_VERSION: $ELK_VERSION
-    volumes:
-      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ./logstash/pipeline:/usr/share/logstash/pipeline
-      - logstashdata:/usr/share/logstash/data
-    ports:
-      - "5044:5044"
-      - "9600:9600"
-      - "2514:2514"
-    networks:
-      macvlan-network:
-        ipv4_address: 192.168.2.92
-    environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-    depends_on:
-      - elasticsearch
-
-  kibana:
-    restart: always
-    container_name: kibana
-    hostname: kibana
+    container_name: odfe-kibana
+    hostname: odfe-kibana
     build:
       context: kibana/
       args:
-        ELK_VERSION: $ELK_VERSION
+        DISTRO_VERSION: $DISTRO_VERSION
     volumes:
-      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+      #- ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    environment:
+      ELASTICSEARCH_URL: https://odfe-node1:9200
     ports:
       - "5601:5601"
+    expose:
+      - "5601"
     networks:
-      macvlan-network:
-        ipv4_address: 192.168.2.93
+      - odfe-net
     depends_on:
-      - elasticsearch
+      - odfe-node1
 
   metricbeat:
     restart: always
-    container_name: metricbeat
-    hostname: metricbeat-docker
+    container_name: odfe-metricbeat
+    hostname: odfe-metricbeat
     user: root
     deploy:
       resources:
@@ -146,30 +112,29 @@ services:
       args:
         ELK_VERSION: $ELK_VERSION
     networks:
-      macvlan-network:
-        ipv4_address: 192.168.2.94
+      - odfe-net
     volumes:
       - /proc:/hostfs/proc:ro
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
       - /:/hostfs:ro
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/docker/metricbeat/data:/usr/share/metricbeat/data
-      - ./metricbeat/config/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+      #- ./metricbeat/config/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
     command: ["--strict.perms=false", "-system.hostfs=/hostfs"]
     depends_on:
-      - kibana
+      - odfe-kibana
 
   filebeat:
     restart: always
-    container_name: filebeat
-    hostname: filebeat-docker
+    container_name: odfe-filebeat
+    hostname: odfe-filebeat
     user: root
     build:
       context: filebeat/
       args:
         ELK_VERSION: $ELK_VERSION
     volumes:
-      - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      #- ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - /var/run/docker.sock:/var/run/docker.sock
       # This is needed for filebeat to load container log path as specified in filebeat.yml
       - /var/lib/docker/containers/:/var/lib/docker/containers/:ro
@@ -178,34 +143,17 @@ services:
       # This is needed for filebeat to load logs for auditd module
       # - /var/log/audit/:/var/log/audit/:ro
     networks:
-      macvlan-network:
-        ipv4_address: 192.168.2.95
+      - odfe-net
     environment:
-      - KIBANA_HOST="kibana"
-      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME:-elastic}
-      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD:-changeme}
+      - KIBANA_HOST="odfe-kibana"
     command: ["--strict.perms=false"]
     depends_on:
-      - kibana
-
-  elasticsearch-head:
-    restart: always
-    container_name: head
-    hostname: head
-    build:
-      context: elasticsearch-head/
-    ports:
-      - "9100:9100"
-    networks:
-      macvlan-network:
-        ipv4_address: 192.168.2.96
-    depends_on:
-      - kibana
+      - odfe-kibana
 
   curator:
     restart: always
-    container_name: curator
-    hostname: curator
+    container_name: odfe-curator
+    hostname: odfe-curator
     deploy:
       resources:
           limits:
@@ -214,45 +162,22 @@ services:
     build:
       context: curator/
     environment:
-      - ES_HOST=elasticsearch
+      - ES_HOST=odfe-node1
       - DRYRUN=FALSE
       - INTERVAL_IN_HOURS=24
     volumes:
       - ./curator/config:/app/conf/:ro
       - ./curator/actions:/app/actions/:ro
     networks:
-      macvlan-network:
-        ipv4_address: 192.168.2.97
+      - odfe-net
     depends_on:
-      - elasticsearch
-
-  # elastalert:
-  #   restart: always
-  #   container_name: elastalert
-  #   hostname: elastalert
-  #   deploy:
-  #     resources:
-  #         limits:
-  #           cpus: "2"
-  #           memory: "1G"
-  #   build:
-  #     context: elastalert/
-  #   ports:
-  #   - '3030:3030'
-  #   environment:
-  #   - ELASTICSEARCH_PORT="9200"
-  #   - ELASTICSEARCH_HOST="elasticsearch"
-  #   - ELASTALERT_SUPERVISOR_CONF="/opt/config/elastalert_supervisord.conf"
-  #   networks:
-  #     - elk
-  #   depends_on:
-  #     - kibana
+      - odfe-node1
 
 networks:
-  elk:
+  odfe-net:
     driver: bridge
-  macvlan-network:
-    external: true
 volumes:
   logstashdata:
     driver: local
+  odfe-data1:
+  odfe-data2:
