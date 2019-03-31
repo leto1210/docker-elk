@@ -175,7 +175,7 @@ services:
 
 networks:
   odfe-net:
-    driver: bridge
+    # driver: bridge
 volumes:
   logstashdata:
     driver: local
