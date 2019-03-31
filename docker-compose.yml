@@ -5,7 +5,6 @@ services:
     restart: always
     container_name: odfe-node1
     hostname: odfe-node1
-    user: "1000:1000"
     deploy:
       resources:
           limits:
@@ -41,7 +40,6 @@ services:
     restart: always
     container_name: odfe-node2
     hostname: odfe-node2
-    user: "1000:1000"
     deploy:
       resources:
           limits:
