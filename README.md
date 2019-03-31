@@ -2,7 +2,7 @@
 
 [![Elastic Stack version](https://img.shields.io/badge/ELK-6.5.4-blue.svg?style=flat)]()
 
-[![Build Status](https://travis-ci.org/leto1210/docker-elk.svg?branch=master)](https://travis-ci.org/leto1210/docker-elk)
+[![Build Status](https://travis-ci.org/leto1210/docker-elk.svg?branch=open-distro)](https://travis-ci.org/leto1210/docker-elk)
 
 Run the latest version of the [Elastic stack](https://www.elastic.co/elk-stack) with Docker and Docker Compose.
 
