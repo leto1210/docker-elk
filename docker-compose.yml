@@ -28,6 +28,7 @@ services:
       - node.name=odfe-node1
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS: -Xmx2000m -Xms2000m"
+      - opendistro_security.ssl.http.enabled=false
     networks:
       - odfe-net
     healthcheck:
@@ -61,6 +62,7 @@ services:
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS: -Xmx2000m -Xms2000m"
       - discovery.zen.ping.unicast.hosts=odfe-node1
+      - opendistro_security.ssl.http.enabled=false
     networks:
       - odfe-net
     healthcheck:
@@ -80,7 +82,7 @@ services:
     volumes:
       - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
     environment:
-      ELASTICSEARCH_URL: https://odfe-node1:9200
+      ELASTICSEARCH_URL: http://odfe-node1:9200
     ports:
       - "5601:5601"
     expose:
