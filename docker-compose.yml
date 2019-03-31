@@ -77,8 +77,8 @@ services:
       context: kibana/
       args:
         DISTRO_VERSION: $DISTRO_VERSION
-    # volumes:
-      #- ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
     environment:
       ELASTICSEARCH_URL: https://odfe-node1:9200
     ports:
@@ -115,7 +115,7 @@ services:
       - /:/hostfs:ro
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/docker/metricbeat/data:/usr/share/metricbeat/data
-      #- ./metricbeat/config/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+      - ./metricbeat/config/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
     command: ["--strict.perms=false", "-system.hostfs=/hostfs"]
     depends_on:
       - odfe-kibana
